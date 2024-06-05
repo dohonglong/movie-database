@@ -10,11 +10,15 @@ const useMovies = () => {
     const fetchMovies = async () => {
       try {
         const response = await fetch(
-          `https://api.themoviedb.org/3/trending/all/day?api_key=${api_key}&page=3`
+          `https://api.themoviedb.org/3/collection/39199?api_key=${api_key}&language=en-US`
         );
         const data = await response.json();
-        // console.log(data);
-        setMovies(data.results);
+        const movies = data.parts;
+        const sortedMovies = [...movies].sort(
+          (a, b) => new Date(a.release_date) - new Date(b.release_date)
+        );
+        //console.log(sortedMovies);
+        setMovies(sortedMovies);
       } catch (error) {
         setError(error);
       }

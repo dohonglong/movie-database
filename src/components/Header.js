@@ -3,7 +3,6 @@ import MovieIcon from "@mui/icons-material/Movie";
 import {
   AppBar,
   Container,
-  // Grid,
   Box,
   IconButton,
   Button,
@@ -15,11 +14,37 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  ListItemIcon,
+  Stack,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Movie, Search, Tv, Whatshot } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
-const navItems = ["Trending", "Movies", "TV Series", "Search"];
+
+const menus = [
+  {
+    icon: <Whatshot />,
+    name: "Trending",
+    link: "/",
+  },
+  {
+    icon: <Movie />,
+    name: "Movies",
+    link: "/movies",
+  },
+  {
+    icon: <Tv />,
+    name: "Series",
+    link: "/series",
+  },
+  {
+    icon: <Search />,
+    name: "Search",
+    link: "/search",
+  },
+];
 
 const Header = (props) => {
   const { window } = props;
@@ -36,10 +61,11 @@ const Header = (props) => {
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+        {menus.map((menu) => (
+          <ListItem key={menu.name} disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={item} />
+              <ListItemIcon sx={{ minWidth: 0 }}>{menu.icon}</ListItemIcon>
+              <ListItemText primary={menu.name} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -59,6 +85,7 @@ const Header = (props) => {
         >
           <Toolbar>
             {/* MAIN TITLE */}
+
             <Typography
               component="div"
               sx={{
@@ -89,10 +116,15 @@ const Header = (props) => {
 
             {/* MENU BAR */}
             <Box sx={{ display: { xs: "none", sm: "none", lg: "block" } }}>
-              {navItems.map((item) => (
-                <Button key={item} sx={{ color: "#fff" }}>
-                  <h2>{item}</h2>
-                </Button>
+              {menus.map((menu) => (
+                <Link to={`${menu.link}`} key={menu.name}>
+                  <Button sx={{ color: "#fff" }}>
+                    <Stack direction="row" alignItems="center" gap={1}>
+                      {menu.icon}
+                      <h2>{menu.name}</h2>
+                    </Stack>
+                  </Button>
+                </Link>
               ))}
             </Box>
           </Toolbar>
